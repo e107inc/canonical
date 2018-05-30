@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e107Plugin name="Canonical" lan="" version="1.0" date="2015-09-14" compatibility="2.0" installRequired="true" >
+	<author name="e107" url="e107.org" />
+	<summary lan="">Adds support for syndicating content from other websites using rel=canonical tags. </summary>
+	<description lan="">The Canonical plugin adds a meta box in your news editing page You can add URL of where the content was originally published. The plugin will add the appropriate rel=canonical tags to your pages.</description>
+	<keywords>
+		<word>canonical</word>
+		<word>syndicate</word>
+	</keywords>
+	<category>content</category>
+	<copyright></copyright>
+	<adminLinks>
+		<link url="admin_config.php" description="" icon="" iconSmall="" primary="true" >LAN_CONFIGURE</link>
+	</adminLinks>
+	<pluginPrefs>
+		<pref name='active'>1</pref>
+	</pluginPrefs>
+</e107Plugin>
