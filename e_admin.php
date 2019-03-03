@@ -4,7 +4,7 @@
 //v2.x Standard for extending admin areas.
 
 
-class canonical_admin
+class canonical_admin implements e_admin_addon_interface
 {
 	private $active = false;
 
@@ -15,20 +15,45 @@ class canonical_admin
 		$this->active = 1;
 	}
 
+	/**
+	 * Return a list of values for the currently viewed list page.
+	 * @param string $event
+	 * @param string $ids comma separated primary ids to return in the array.
+	 * @return array with primary id as keys and array of fields key/pair values.
+	 */
+	public function load($event, $ids)
+	{
+		$data = e107::getDb()->retrieve("canonical","*", "can_table='".$event."' AND can_pid IN(".$ids.")",true);
+
+		$ret = array();
+
+		foreach($data as $row)
+		{
+			$id = (int) $row['can_pid'];
+			$ret[$id]['url'] = $row['can_url'];
+
+		}
+
+		return $ret;
+
+	}
+
+
 
 	/**
 	 * Extend Admin-ui Parameters
 	 * @param $ui admin-ui object
 	 * @return array
 	 */
-	public function config($ui)
+	public function config(e_admin_ui $ui)
 	{
-		$action     = $ui->getAction(); // current mode: create, edit, list
+		//$action     = $ui->getAction(); // current mode: create, edit, list
 		$type       = $ui->getEventName(); // 'wmessage', 'news' etc.
 		$id         = $ui->getId();
 		$sql        = e107::getDb();
 
 		$config = array();
+
 
 		switch($type)
 		{
@@ -52,7 +77,7 @@ class canonical_admin
 				break;
 		}
 
-		//Note: 'urls' will be returned as $_POST['x_canonical_url']. ie. x_{PLUGIN_FOLDER}_{YOURKEY}
+		//Note: 'url' will be returned as $_POST['x_canonical_url']. ie. x_{PLUGIN_FOLDER}_{YOURKEY}
 
 		return $config;
 
@@ -61,9 +86,11 @@ class canonical_admin
 
 	/**
 	 * Process Posted Data.
-	 * @param $ui admin-ui object
+	 *
+	 * @param e_admin_ui $ui admin-ui object
+	 * @param int $id
 	 */
-	public function process($ui, $id=0)
+	public function process(e_admin_ui $ui, $id=0)
 	{
 
 		$data       = $ui->getPosted();
@@ -126,5 +153,3 @@ class canonical_admin
 
 
 
-
-?>
