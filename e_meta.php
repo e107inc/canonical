@@ -14,7 +14,7 @@ if (!defined('e107_INIT')) { exit; }
 
 if(e107::isInstalled('canonical') && USER_AREA)
 {
-	if(e_PAGE == "news.php" && e_QUERY !='')
+	if(defset('e_PAGE') == "news.php" && e_QUERY !='')
 	{
 		list($mode,$id) = explode(".", e_QUERY);
 	}
