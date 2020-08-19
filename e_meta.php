@@ -27,4 +27,3 @@ if(e107::isInstalled('canonical') && USER_AREA)
 
 }
 
-?>
